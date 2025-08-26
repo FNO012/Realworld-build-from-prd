@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.349s</div>
+<div class="counter">0.004s</div>
 <p>duration</p>
 </div>
 </td>
@@ -66,9 +66,6 @@
 <li>
 <a href="#tab1">Standard output</a>
 </li>
-<li>
-<a href="#tab2">Standard error</a>
-</li>
 </ul>
 <div id="tab0" class="tab">
 <h2>Tests</h2>
@@ -82,7 +79,7 @@
 </thead>
 <tr>
 <td class="success">contextLoads()</td>
-<td class="success">0.349s</td>
+<td class="success">0.004s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -90,8 +87,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>15:23:25.062 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.realworld.conduit.ConduitApplicationTests]: ConduitApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-15:23:25.091 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.realworld.conduit.ConduitApplication for test class com.realworld.conduit.ConduitApplicationTests
+<pre>2025-08-26T20:48:49.582+09:00  INFO 18910 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.realworld.conduit.ConduitApplicationTests]: ConduitApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-08-26T20:48:49.588+09:00  INFO 18910 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.realworld.conduit.ConduitApplication for test class com.realworld.conduit.ConduitApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -102,28 +99,26 @@
 
  :: Spring Boot ::                (v3.3.4)
 
-2025-08-26T15:23:25.219+09:00  INFO 55722 --- [    Test worker] c.r.conduit.ConduitApplicationTests      : Starting ConduitApplicationTests using Java 21.0.7 with PID 55722 (started by eyeson in /Users/eyeson/study/Realworld-build-from-prd/backend)
-2025-08-26T15:23:25.219+09:00 DEBUG 55722 --- [    Test worker] c.r.conduit.ConduitApplicationTests      : Running with Spring Boot v3.3.4, Spring v6.1.13
-2025-08-26T15:23:25.220+09:00  INFO 55722 --- [    Test worker] c.r.conduit.ConduitApplicationTests      : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2025-08-26T15:23:25.383+09:00 DEBUG 55722 --- [    Test worker] o.m.s.b.a.MybatisAutoConfiguration       : Searching for mappers annotated with @Mapper
-2025-08-26T15:23:25.383+09:00 DEBUG 55722 --- [    Test worker] o.m.s.b.a.MybatisAutoConfiguration       : Using auto-configuration base package 'com.realworld.conduit'
-2025-08-26T15:23:25.417+09:00  WARN 55722 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.realworld.conduit]' package. Please check your configuration.
-2025-08-26T15:23:25.627+09:00 DEBUG 55722 --- [    Test worker] o.m.s.b.a.MybatisAutoConfiguration       : Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.
-2025-08-26T15:23:25.645+09:00 DEBUG 55722 --- [    Test worker] o.mybatis.spring.SqlSessionFactoryBean   : Property 'mapperLocations' was not specified.
-2025-08-26T15:23:25.651+09:00  INFO 55722 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-08-26T15:23:25.685+09:00  INFO 55722 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@1c3b6963
-2025-08-26T15:23:25.686+09:00  INFO 55722 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-08-26T15:23:25.721+09:00  INFO 55722 --- [    Test worker] c.r.conduit.ConduitApplicationTests      : Started ConduitApplicationTests in 0.588 seconds (process running for 0.932)
-</pre>
-</span>
-</div>
-<div id="tab2" class="tab">
-<h2>Standard error</h2>
-<span class="code">
-<pre>WARNING: A Java agent has been loaded dynamically (/Users/eyeson/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.19/154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1/byte-buddy-agent-1.14.19.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2025-08-26T20:48:49.611+09:00  INFO 18910 --- [    Test worker] c.r.conduit.ConduitApplicationTests      : Starting ConduitApplicationTests using Java 21.0.7 with PID 18910 (started by eyeson in /Users/eyeson/study/Realworld-build-from-prd/backend)
+2025-08-26T20:48:49.611+09:00 DEBUG 18910 --- [    Test worker] c.r.conduit.ConduitApplicationTests      : Running with Spring Boot v3.3.4, Spring v6.1.13
+2025-08-26T20:48:49.611+09:00  INFO 18910 --- [    Test worker] c.r.conduit.ConduitApplicationTests      : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-08-26T20:48:49.708+09:00 DEBUG 18910 --- [    Test worker] o.m.s.b.a.MybatisAutoConfiguration       : Searching for mappers annotated with @Mapper
+2025-08-26T20:48:49.708+09:00 DEBUG 18910 --- [    Test worker] o.m.s.b.a.MybatisAutoConfiguration       : Using auto-configuration base package 'com.realworld.conduit'
+2025-08-26T20:48:49.738+09:00 DEBUG 18910 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [/Users/eyeson/study/Realworld-build-from-prd/backend/build/classes/java/main/com/realworld/conduit/mapper/ArticleMapper.class]
+2025-08-26T20:48:49.738+09:00 DEBUG 18910 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [/Users/eyeson/study/Realworld-build-from-prd/backend/build/classes/java/main/com/realworld/conduit/mapper/CommentMapper.class]
+2025-08-26T20:48:49.738+09:00 DEBUG 18910 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [/Users/eyeson/study/Realworld-build-from-prd/backend/build/classes/java/main/com/realworld/conduit/mapper/UserMapper.class]
+2025-08-26T20:48:49.739+09:00 DEBUG 18910 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'articleMapper' and 'com.realworld.conduit.mapper.ArticleMapper' mapperInterface
+2025-08-26T20:48:49.739+09:00 DEBUG 18910 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'commentMapper' and 'com.realworld.conduit.mapper.CommentMapper' mapperInterface
+2025-08-26T20:48:49.739+09:00 DEBUG 18910 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'userMapper' and 'com.realworld.conduit.mapper.UserMapper' mapperInterface
+2025-08-26T20:48:49.790+09:00  INFO 18910 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-08-26T20:48:49.823+09:00  INFO 18910 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@7d17906
+2025-08-26T20:48:49.824+09:00  INFO 18910 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-08-26T20:48:49.894+09:00 DEBUG 18910 --- [    Test worker] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [/Users/eyeson/study/Realworld-build-from-prd/backend/build/resources/main/mapper/ArticleMapper.xml]'
+2025-08-26T20:48:49.900+09:00 DEBUG 18910 --- [    Test worker] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [/Users/eyeson/study/Realworld-build-from-prd/backend/build/resources/main/mapper/CommentMapper.xml]'
+2025-08-26T20:48:49.903+09:00 DEBUG 18910 --- [    Test worker] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [/Users/eyeson/study/Realworld-build-from-prd/backend/build/resources/main/mapper/UserMapper.xml]'
+2025-08-26T20:48:49.948+09:00  INFO 18910 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-08-26T20:48:50.109+09:00 DEBUG 18910 --- [    Test worker] o.m.s.b.a.MybatisAutoConfiguration       : Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.
+2025-08-26T20:48:50.137+09:00  INFO 18910 --- [    Test worker] c.r.conduit.ConduitApplicationTests      : Started ConduitApplicationTests in 0.542 seconds (process running for 1.662)
 </pre>
 </span>
 </div>
@@ -135,7 +130,7 @@ WARNING: Dynamic loading of agents will be disallowed by default in a future rel
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.8</a> at 2025. 8. 26. 오후 3:23:26</p>
+<a href="http://www.gradle.org">Gradle 8.8</a> at 2025. 8. 26. 오후 8:48:50</p>
 </div>
 </div>
 </body>

@@ -20,13 +20,13 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">1</div>
+<div class="counter">60</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">0</div>
+<div class="counter">5</div>
 <p>failures</p>
 </div>
 </td>
@@ -38,7 +38,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.349s</div>
+<div class="counter">0.259s</div>
 <p>duration</p>
 </div>
 </td>
@@ -47,8 +47,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox success" id="successRate">
-<div class="percent">100%</div>
+<div class="infoBox failures" id="successRate">
+<div class="percent">91%</div>
 <p>successful</p>
 </div>
 </td>
@@ -58,13 +58,41 @@
 <div id="tabs">
 <ul class="tabLinks">
 <li>
-<a href="#tab0">Packages</a>
+<a href="#tab0">Failed tests</a>
 </li>
 <li>
-<a href="#tab1">Classes</a>
+<a href="#tab1">Packages</a>
+</li>
+<li>
+<a href="#tab2">Classes</a>
 </li>
 </ul>
 <div id="tab0" class="tab">
+<h2>Failed tests</h2>
+<ul class="linkList">
+<li>
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html">UserControllerTest</a>.
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html#login_EndpointAccessible()">로그인 엔드포인트 접근 가능성 테스트</a>
+</li>
+<li>
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html">UserControllerTest</a>.
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html#register_BusinessLogicFail()">회원가입 API 비즈니스 로직 실패 테스트</a>
+</li>
+<li>
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html">UserControllerTest</a>.
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html#register_Success()">회원가입 API 성공 테스트</a>
+</li>
+<li>
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html">UserControllerTest</a>.
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html#register_ValidationFail_EmptyUsername()">회원가입 API 검증 실패 테스트 - 빈 사용자명</a>
+</li>
+<li>
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html">UserControllerTest</a>.
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html#register_ValidationFail_InvalidEmail()">회원가입 API 검증 실패 테스트 - 잘못된 이메일 형식</a>
+</li>
+</ul>
+</div>
+<div id="tab1" class="tab">
 <h2>Packages</h2>
 <table>
 <thead>
@@ -85,13 +113,43 @@
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>0.349s</td>
+<td>0.004s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="packages/com.realworld.conduit.controller.html">com.realworld.conduit.controller</a>
+</td>
+<td>13</td>
+<td>5</td>
+<td>0</td>
+<td>0.108s</td>
+<td class="failures">61%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="packages/com.realworld.conduit.service.html">com.realworld.conduit.service</a>
+</td>
+<td>26</td>
+<td>0</td>
+<td>0</td>
+<td>0.094s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="packages/com.realworld.conduit.util.html">com.realworld.conduit.util</a>
+</td>
+<td>20</td>
+<td>0</td>
+<td>0</td>
+<td>0.053s</td>
 <td class="success">100%</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="tab1" class="tab">
+<div id="tab2" class="tab">
 <h2>Classes</h2>
 <table>
 <thead>
@@ -112,7 +170,97 @@
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>0.349s</td>
+<td>0.004s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.realworld.conduit.controller.ArticleControllerTest.html">com.realworld.conduit.controller.ArticleControllerTest</a>
+</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0.083s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.realworld.conduit.controller.CommentControllerTest.html">com.realworld.conduit.controller.CommentControllerTest</a>
+</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0.018s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="classes/com.realworld.conduit.controller.UserControllerTest.html">com.realworld.conduit.controller.UserControllerTest</a>
+</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>0.007s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.realworld.conduit.service.ArticleServiceTest.html">com.realworld.conduit.service.ArticleServiceTest</a>
+</td>
+<td>10</td>
+<td>0</td>
+<td>0</td>
+<td>0.044s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.realworld.conduit.service.CommentServiceTest.html">com.realworld.conduit.service.CommentServiceTest</a>
+</td>
+<td>11</td>
+<td>0</td>
+<td>0</td>
+<td>0.027s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.realworld.conduit.service.CustomUserDetailsServiceTest.html">com.realworld.conduit.service.CustomUserDetailsServiceTest</a>
+</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0.003s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.realworld.conduit.service.UserServiceTest.html">com.realworld.conduit.service.UserServiceTest</a>
+</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0.020s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.realworld.conduit.util.JwtTokenProviderTest.html">com.realworld.conduit.util.JwtTokenProviderTest</a>
+</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0.050s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.realworld.conduit.util.SlugUtilsTest.html">com.realworld.conduit.util.SlugUtilsTest</a>
+</td>
+<td>15</td>
+<td>0</td>
+<td>0</td>
+<td>0.003s</td>
 <td class="success">100%</td>
 </tr>
 </tbody>
@@ -126,7 +274,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.8</a> at 2025. 8. 26. 오후 3:23:26</p>
+<a href="http://www.gradle.org">Gradle 8.8</a> at 2025. 8. 26. 오후 8:48:50</p>
 </div>
 </div>
 </body>

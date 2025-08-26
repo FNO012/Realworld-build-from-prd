@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.realworld.conduit.mapper.ArticleMapper">
+
+    <resultMap id="ArticleResultMap" type="com.realworld.conduit.model.Article">
+        <id property="id" column="id"/>
+        <result property="slug" column="slug"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="body" column="body"/>
+        <result property="authorId" column="author_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="authorUsername" column="author_username"/>
+        <result property="authorEmail" column="author_email"/>
+        <result property="authorBio" column="author_bio"/>
+        <result property="authorImage" column="author_image"/>
+    </resultMap>
+
+    <insert id="insertArticle" parameterType="com.realworld.conduit.model.Article" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO articles (slug, title, description, body, author_id, created_at, updated_at)
+        VALUES (#{slug}, #{title}, #{description}, #{body}, #{authorId}, NOW(), NOW())
+    </insert>
+
+    <select id="findBySlug" parameterType="string" resultMap="ArticleResultMap">
+        SELECT a.id, a.slug, a.title, a.description, a.body, a.author_id, 
+               a.created_at, a.updated_at,
+               u.username as author_username, u.email as author_email, 
+               u.bio as author_bio, u.image as author_image
+        FROM articles a
+        LEFT JOIN users u ON a.author_id = u.id
+        WHERE a.slug = #{slug}
+    </select>
+
+    <select id="findAllArticles" resultMap="ArticleResultMap">
+        SELECT a.id, a.slug, a.title, a.description, a.body, a.author_id, 
+               a.created_at, a.updated_at,
+               u.username as author_username, u.email as author_email, 
+               u.bio as author_bio, u.image as author_image
+        FROM articles a
+        LEFT JOIN users u ON a.author_id = u.id
+        ORDER BY a.created_at DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <update id="updateArticle" parameterType="com.realworld.conduit.model.Article">
+        UPDATE articles 
+        SET title = #{title}, 
+            description = #{description}, 
+            body = #{body}, 
+            updated_at = NOW()
+        WHERE slug = #{slug}
+    </update>
+
+    <delete id="deleteBySlug" parameterType="string">
+        DELETE FROM articles WHERE slug = #{slug}
+    </delete>
+
+    <select id="existsBySlug" parameterType="string" resultType="boolean">
+        SELECT COUNT(*) > 0 FROM articles WHERE slug = #{slug}
+    </select>
+
+    <select id="countAllArticles" resultType="int">
+        SELECT COUNT(*) FROM articles
+    </select>
+
+</mapper>
