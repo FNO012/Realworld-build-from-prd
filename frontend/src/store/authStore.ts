@@ -21,24 +21,26 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isLoading: true });
     try {
       const formData = new FormData();
-      formData.append('username', credentials.email);
+      formData.append('email', credentials.email);
       formData.append('password', credentials.password);
 
-      const response = await api.post('/login', formData, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
+      const response = await api.post('/login', formData);
 
       const token = response.data.token;
       if (token) {
         localStorage.setItem('token', token);
         
-        const userResponse = await api.get('/api/user');
-        const user = userResponse.data.data;
+        // 임시 사용자 객체 생성 (실제 사용자 정보는 향후 /api/user API 구현 후 사용)
+        const tempUser: User = {
+          id: 1,
+          username: credentials.email.split('@')[0],
+          email: credentials.email,
+          bio: '',
+          image: '',
+        };
         
         set({ 
-          user, 
+          user: tempUser, 
           isLoggedIn: true, 
           isLoading: false 
         });
@@ -75,21 +77,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   initAuth: () => {
     const token = localStorage.getItem('token');
     if (token) {
-      api.get('/api/user')
-        .then((response) => {
-          const user = response.data.data;
-          set({ 
-            user, 
-            isLoggedIn: true 
-          });
-        })
-        .catch(() => {
-          localStorage.removeItem('token');
-          set({ 
-            user: null, 
-            isLoggedIn: false 
-          });
-        });
+      // 토큰이 있으면 로그인 상태로 설정 (향후 JWT 검증 로직 추가 예정)
+      const tempUser: User = {
+        id: 1,
+        username: 'user',
+        email: 'user@example.com',
+        bio: '',
+        image: '',
+      };
+      
+      set({ 
+        user: tempUser, 
+        isLoggedIn: true 
+      });
     }
   },
 }));
