@@ -40,11 +40,49 @@ Content-Type: application/json
   "password": "password123"
 }
 
-### Spring Security 로그인 API 성공 테스트
+### Spring Security 로그인 API 성공 테스트 (JWT 발급)
 POST http://localhost:8080/login
 Content-Type: application/x-www-form-urlencoded
 
 email=test2@example.com&password=password123
+
+> {%
+    if (response.status === 200) {
+        const responseJson = response.body;
+        if (responseJson.success && responseJson.token) {
+            client.global.set("jwt_token", responseJson.token);
+            console.log("✅ JWT 토큰 저장 성공:", responseJson.token.substring(0, 50) + "...");
+            console.log("토큰 타입:", responseJson.tokenType);
+            console.log("로그인 메시지:", responseJson.message);
+        } else {
+            console.log("❌ 로그인 응답에 토큰이 없습니다");
+        }
+    } else {
+        console.log("❌ 로그인 실패:", response.status);
+    }
+%}
+
+### JWT 토큰을 사용한 인증된 요청 예시 - 사용자 프로필 조회 (가상 엔드포인트)
+GET http://localhost:8080/api/user/profile
+Authorization: Bearer {{jwt_token}}
+
+### JWT 토큰을 사용한 인증된 요청 예시 - 글 작성 (가상 엔드포인트)
+POST http://localhost:8080/api/articles
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "title": "JWT 토큰 테스트 글",
+  "description": "JWT 인증이 필요한 글 작성 테스트",
+  "body": "이 글은 JWT 토큰 인증으로 작성되었습니다."
+}
+
+### JWT 토큰 검증 테스트 - 잘못된 토큰
+GET http://localhost:8080/api/user/profile
+Authorization: Bearer invalid.jwt.token
+
+### JWT 토큰 없이 인증 필요한 엔드포인트 접근 테스트
+GET http://localhost:8080/api/user/profile
 
 ### Spring Security 로그인 API 실패 테스트 - 존재하지 않는 이메일
 POST http://localhost:8080/login
