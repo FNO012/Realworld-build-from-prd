@@ -1,0 +1,77 @@
+### RealWorld Conduit API - 사용자 컨트롤러 테스트
+
+### 회원가입 API 성공 테스트
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "username": "testuser2",
+  "email": "test2@example.com",
+  "password": "password123"
+}
+
+### 회원가입 API 검증 실패 테스트 - 빈 사용자명
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "username": "",
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### 회원가입 API 검증 실패 테스트 - 잘못된 이메일 형식
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "invalid-email",
+  "password": "password123"
+}
+
+### 회원가입 API 비즈니스 로직 실패 테스트 - 중복 이메일
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "username": "testuser2",
+  "email": "existing@example.com",
+  "password": "password123"
+}
+
+### 로그인 API 성공 테스트
+POST http://localhost:8080/api/users/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### 로그인 API 검증 실패 테스트 - 빈 이메일
+POST http://localhost:8080/api/users/login
+Content-Type: application/json
+
+{
+  "email": "",
+  "password": "password123"
+}
+
+### 로그인 API 비즈니스 로직 실패 테스트 - 존재하지 않는 이메일
+POST http://localhost:8080/api/users/login
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com",
+  "password": "password123"
+}
+
+### 로그인 API 비즈니스 로직 실패 테스트 - 잘못된 패스워드
+POST http://localhost:8080/api/users/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "wrongpassword"
+}

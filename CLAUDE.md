@@ -167,6 +167,10 @@ The project follows a structured MVP approach with GitHub issues tracking progre
 - Backend: JUnit unit tests for services and integration tests for APIs
 - Frontend: Jest/React Testing Library for component tests
 - End-to-end: Manual testing of complete user flows (registration → login → article creation → commenting)
+- **HTTP Request Test Files**: Controller 생성 시 해당 Controller 이름의 .http 파일을 `src/test/` 하위에 생성해야 함
+  - 파일명 형식: `{ControllerName}.http` (예: UserController → UserControllerTest.http)
+  - 각 Controller의 모든 API 엔드포인트에 대한 HTTP 요청 테스트 케이스 포함
+  - 성공 케이스와 실패 케이스(검증 오류, 비즈니스 로직 오류) 모두 작성
 
 ### Commit and Issue Tracking Guidelines
 - **GitHub CLI Usage**: All GitHub-related operations must use the GitHub CLI (gh command)
@@ -216,3 +220,4 @@ This project emphasizes understanding:
 **Phase**: Planning and Documentation (Pre-Implementation)
 **Status**: Ready for implementation following GitHub issue roadmap
 **Next Steps**: Begin with Issue #4 (Environment Setup) to create actual code directories
+- 5
