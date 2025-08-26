@@ -20,21 +20,26 @@ Spring Boot (백엔드) + Next.js (프론트엔드) 조합으로 구현합니다
 ## 2. 백엔드 MVP (Spring Boot 기본)
 
 ### 2.1 Spring Boot 기본 설정
-- [ ] Spring Boot 프로젝트 생성
-- [ ] 기본 의존성 설정
+- [x] Spring Boot 프로젝트 생성 ✅ **완료**
+- [x] 기본 의존성 설정 ✅ **완료**
   - Spring Boot Starter Web
+  - Spring Boot Starter Security
   - MyBatis Spring Boot Starter  
   - MariaDB Connector
-- [ ] 기본 설정 파일 (`application.yml`)
+  - **JWT 라이브러리 (jjwt 0.12.3)** ✅
+- [x] 기본 설정 파일 (`application.yml`) ✅ **완료**
 
 ### 2.2 핵심 데이터 모델
-- [ ] User 엔티티 (기본 필드만: id, username, email, password)
+- [x] User 엔티티 (기본 필드만: id, username, email, password) ✅ **완료**
 - [ ] Article 엔티티 (기본 필드만: id, title, body, author_id, created_at)
 - [ ] Comment 엔티티 (기본 필드만: id, body, article_id, author_id)
 
 ### 2.3 필수 API만 구현
-- [ ] 사용자 회원가입 API (`POST /api/users`)
-- [ ] 사용자 로그인 API (`POST /api/users/login`) - 단순 인증
+- [x] 사용자 회원가입 API (`POST /api/users`) ✅ **완료**
+- [x] 사용자 로그인 API (`POST /login`) - **JWT 토큰 기반 인증 구현 완료** ✅
+  - Spring Security + JWT 토큰 발급 시스템
+  - JwtAuthenticationFilter 및 CustomUserDetailsService
+  - 24시간 유효 JWT 토큰, Bearer 인증 방식
 - [ ] 아티클 목록 조회 (`GET /api/articles`)
 - [ ] 아티클 상세 조회 (`GET /api/articles/:slug`)
 - [ ] 아티클 생성 (`POST /api/articles`)

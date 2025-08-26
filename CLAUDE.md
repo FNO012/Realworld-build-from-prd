@@ -23,7 +23,7 @@ This is a live coding learning project to implement the RealWorld Conduit applic
 - **Database**: MariaDB (hosted on development machine, not containerized)
 - **ORM**: MyBatis
 - **Build Tool**: Gradle
-- **Authentication**: JWT-based (planned), simplified session for MVP
+- **Authentication**: JWT 토큰 기반 인증 시스템 (구현 완료)
 - **Testing**: JUnit
 
 ### Frontend Stack  
@@ -141,7 +141,11 @@ The project follows a structured MVP approach with GitHub issues tracking progre
 
 ### Key Implementation Notes
 - Database connection points to host machine MariaDB (not containerized)
-- Authentication starts simple (session-based) before JWT implementation
+- **Authentication**: JWT 토큰 기반 인증 시스템 구현 완료
+  - Spring Security + JWT (jjwt 라이브러리)
+  - 로그인 성공 시 JWT 토큰 자동 발급 (24시간 유효)
+  - Bearer 토큰 방식: `Authorization: Bearer <token>`
+  - JwtAuthenticationFilter를 통한 자동 인증 처리
 - Frontend uses Next.js App Router (not Pages Router)
 - Responsive design mandatory (mobile-first approach)
 - CORS configuration required for frontend-backend communication

@@ -85,11 +85,11 @@ RealWorld Conduit는 Medium.com의 클론으로, 소셜 블로깅 플랫폼을 �
 
 ## 5. API 스펙
 
-### 5.1 인증 (Authentication)
-- `POST /api/users/login` - 로그인
-- `POST /api/users` - 회원가입
-- `GET /api/user` - 현재 사용자 정보
-- `PUT /api/user` - 사용자 정보 수정
+### 5.1 인증 (Authentication) ✅ **JWT 구현 완료**
+- `POST /login` - 로그인 (JWT 토큰 발급) ✅ **구현 완료**
+- `POST /api/users` - 회원가입 ✅ **구현 완료** 
+- `GET /api/user` - 현재 사용자 정보 (JWT 인증 필요)
+- `PUT /api/user` - 사용자 정보 수정 (JWT 인증 필요)
 
 ### 5.2 프로필 (Profiles)
 - `GET /api/profiles/:username` - 프로필 조회

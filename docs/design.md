@@ -322,7 +322,7 @@ graph TD
 
 ## 인증 시스템 설계
 
-### MVP 인증 플로우
+### JWT 토큰 기반 인증 플로우 (구현 완료)
 
 ```mermaid
 sequenceDiagram
@@ -332,23 +332,33 @@ sequenceDiagram
     participant Database
     
     Client->>Frontend: 로그인 요청
-    Frontend->>Backend: POST /api/users/login
-    Backend->>Database: 사용자 조회
+    Frontend->>Backend: POST /login (form-data)
+    Backend->>Database: 사용자 조회 (CustomUserDetailsService)
     Database-->>Backend: 사용자 정보
-    Backend->>Backend: 비밀번호 검증
-    Backend-->>Frontend: 로그인 성공 + 사용자 정보
-    Frontend->>Frontend: 사용자 상태 저장
+    Backend->>Backend: 비밀번호 검증 (PasswordEncoder)
+    Backend->>Backend: JWT 토큰 생성 (JwtTokenProvider)
+    Backend-->>Frontend: JWT 토큰 + 로그인 성공 응답
+    Frontend->>Frontend: JWT 토큰 저장 (localStorage)
     Frontend-->>Client: 로그인 완료
+    
+    Note over Client,Database: 인증이 필요한 API 호출
+    Client->>Frontend: API 요청
+    Frontend->>Backend: API 요청 + Authorization: Bearer <token>
+    Backend->>Backend: JWT 토큰 검증 (JwtAuthenticationFilter)
+    Backend->>Backend: Spring Security Context 설정
+    Backend-->>Frontend: API 응답
 ```
 
-### 세션 관리 (단순화)
+### JWT 토큰 관리
 
 ```mermaid
 graph LR
-    LOGIN[로그인] --> SESSION[세션 저장]
-    SESSION --> LOCALSTORAGE[localStorage]
-    LOCALSTORAGE --> AUTH[인증 상태 확인]
-    AUTH --> API[API 요청 시 확인]
+    LOGIN[로그인] --> JWT[JWT 토큰 발급]
+    JWT --> STORAGE[localStorage 저장]
+    STORAGE --> HEADER[Authorization 헤더]
+    HEADER --> FILTER[JwtAuthenticationFilter]
+    FILTER --> VALIDATION[토큰 유효성 검증]
+    VALIDATION --> CONTEXT[Spring Security Context]
 ```
 
 ## 백엔드 아키텍처 설계
@@ -573,13 +583,13 @@ graph LR
 timeline
     title 기술 스택 진화 계획
     
-    section MVP
-        기본 Spring Boot    : MyBatis
-                           : 기본 인증
+    section MVP (완료)
+        Spring Boot + MyBatis : JWT 인증 시스템
+                             : Spring Security 통합
     
     section Phase 2
-        Spring Security    : JWT 토큰
-                          : Redis 캐싱
+        고급 기능           : Redis 캐싱
+                          : Article/Comment API
     
     section Phase 3
         마이크로서비스      : Docker 컨테이너
