@@ -40,38 +40,20 @@ Content-Type: application/json
   "password": "password123"
 }
 
-### 로그인 API 성공 테스트
-POST http://localhost:8080/api/users/login
-Content-Type: application/json
+### Spring Security 로그인 API 성공 테스트
+POST http://localhost:8080/login
+Content-Type: application/x-www-form-urlencoded
 
-{
-  "email": "test@example.com",
-  "password": "password123"
-}
+email=test2@example.com&password=password123
 
-### 로그인 API 검증 실패 테스트 - 빈 이메일
-POST http://localhost:8080/api/users/login
-Content-Type: application/json
+### Spring Security 로그인 API 실패 테스트 - 존재하지 않는 이메일
+POST http://localhost:8080/login
+Content-Type: application/x-www-form-urlencoded
 
-{
-  "email": "",
-  "password": "password123"
-}
+email=nonexistent@example.com&password=password123
 
-### 로그인 API 비즈니스 로직 실패 테스트 - 존재하지 않는 이메일
-POST http://localhost:8080/api/users/login
-Content-Type: application/json
+### Spring Security 로그인 API 실패 테스트 - 잘못된 패스워드
+POST http://localhost:8080/login
+Content-Type: application/x-www-form-urlencoded
 
-{
-  "email": "nonexistent@example.com",
-  "password": "password123"
-}
-
-### 로그인 API 비즈니스 로직 실패 테스트 - 잘못된 패스워드
-POST http://localhost:8080/api/users/login
-Content-Type: application/json
-
-{
-  "email": "test@example.com",
-  "password": "wrongpassword"
-}
+email=test2@example.com&password=wrongpassword

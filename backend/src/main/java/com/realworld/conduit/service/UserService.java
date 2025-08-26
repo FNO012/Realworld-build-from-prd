@@ -1,6 +1,5 @@
 package com.realworld.conduit.service;
 
-import com.realworld.conduit.dto.UserLoginRequest;
 import com.realworld.conduit.dto.UserRegistrationRequest;
 import com.realworld.conduit.dto.UserResponse;
 import com.realworld.conduit.mapper.UserMapper;
@@ -46,21 +45,6 @@ public class UserService {
         return UserResponse.from(user);
     }
     
-    @Transactional(readOnly = true)
-    public UserResponse loginUser(UserLoginRequest request) {
-        log.debug("로그인 시도: email={}", request.getEmail());
-        
-        User user = userMapper.findByEmail(request.getEmail());
-        if (user == null) {
-            throw new RuntimeException("존재하지 않는 이메일입니다: " + request.getEmail());
-        }
-        
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다");
-        }
-        
-        log.info("로그인 성공: userId={}, username={}", user.getId(), user.getUsername());
-        
-        return UserResponse.from(user);
-    }
+    // 로그인은 Spring Security에서 처리됩니다.
+    // CustomUserDetailsService를 통해 사용자 인증이 수행됩니다.
 }

@@ -1,6 +1,5 @@
 package com.realworld.conduit.service;
 
-import com.realworld.conduit.dto.UserLoginRequest;
 import com.realworld.conduit.dto.UserRegistrationRequest;
 import com.realworld.conduit.dto.UserResponse;
 import com.realworld.conduit.mapper.UserMapper;
@@ -31,18 +30,12 @@ class UserServiceTest {
     private UserService userService;
 
     private UserRegistrationRequest registrationRequest;
-    private UserLoginRequest loginRequest;
     private User mockUser;
 
     @BeforeEach
     void setUp() {
         registrationRequest = UserRegistrationRequest.builder()
                 .username("testuser")
-                .email("test@example.com")
-                .password("password123")
-                .build();
-
-        loginRequest = UserLoginRequest.builder()
                 .email("test@example.com")
                 .password("password123")
                 .build();
@@ -108,47 +101,6 @@ class UserServiceTest {
         verify(userMapper, never()).insertUser(any());
     }
 
-    @Test
-    @DisplayName("로그인 성공 테스트")
-    void loginUser_Success() {
-        when(userMapper.findByEmail(loginRequest.getEmail())).thenReturn(mockUser);
-        when(passwordEncoder.matches(loginRequest.getPassword(), mockUser.getPassword())).thenReturn(true);
-
-        UserResponse result = userService.loginUser(loginRequest);
-
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1L);
-        assertThat(result.getUsername()).isEqualTo("testuser");
-        assertThat(result.getEmail()).isEqualTo("test@example.com");
-
-        verify(userMapper).findByEmail("test@example.com");
-        verify(passwordEncoder).matches("password123", "encodedPassword");
-    }
-
-    @Test
-    @DisplayName("존재하지 않는 이메일로 로그인 실패")
-    void loginUser_EmailNotFound() {
-        when(userMapper.findByEmail(loginRequest.getEmail())).thenReturn(null);
-
-        assertThatThrownBy(() -> userService.loginUser(loginRequest))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("존재하지 않는 이메일입니다: test@example.com");
-
-        verify(userMapper).findByEmail("test@example.com");
-        verify(passwordEncoder, never()).matches(anyString(), anyString());
-    }
-
-    @Test
-    @DisplayName("잘못된 비밀번호로 로그인 실패")
-    void loginUser_WrongPassword() {
-        when(userMapper.findByEmail(loginRequest.getEmail())).thenReturn(mockUser);
-        when(passwordEncoder.matches(loginRequest.getPassword(), mockUser.getPassword())).thenReturn(false);
-
-        assertThatThrownBy(() -> userService.loginUser(loginRequest))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("비밀번호가 일치하지 않습니다");
-
-        verify(userMapper).findByEmail("test@example.com");
-        verify(passwordEncoder).matches("password123", "encodedPassword");
-    }
+    // 로그인 기능은 Spring Security에서 CustomUserDetailsService를 통해 처리됩니다.
+    // CustomUserDetailsService에 대한 별도 테스트를 작성해주세요.
 }

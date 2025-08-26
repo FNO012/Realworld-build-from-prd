@@ -58,36 +58,6 @@ public class UserController {
         }
     }
     
-    @PostMapping("/login")
-    public ResponseEntity<ApiResponse<UserResponse>> login(
-            @Valid @RequestBody UserLoginRequest request,
-            BindingResult bindingResult) {
-        
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(error -> 
-                errors.put(error.getField(), error.getDefaultMessage())
-            );
-            
-            ApiResponse<UserResponse> response = ApiResponse.<UserResponse>builder()
-                    .success(false)
-                    .error(ApiResponse.ErrorDetails.builder()
-                            .code("VALIDATION_ERROR")
-                            .message("입력 데이터가 유효하지 않습니다")
-                            .details(errors)
-                            .build())
-                    .build();
-            
-            return ResponseEntity.badRequest().body(response);
-        }
-        
-        try {
-            UserResponse userResponse = userService.loginUser(request);
-            return ResponseEntity.ok(ApiResponse.success(userResponse));
-        } catch (RuntimeException e) {
-            log.error("로그인 실패: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(ApiResponse.error("LOGIN_FAILED", e.getMessage()));
-        }
-    }
+    // 로그인은 Spring Security의 /login 엔드포인트를 사용합니다.
+    // POST /login 요청으로 username(email), password를 JSON으로 전송하세요.
 }
