@@ -59,5 +59,7 @@ public class UserController {
     }
     
     // 로그인은 Spring Security의 /login 엔드포인트를 사용합니다.
-    // POST /login 요청으로 username(email), password를 JSON으로 전송하세요.
+    // POST /login 요청으로 email, password를 form-data로 전송하세요.
+    // Content-Type: application/x-www-form-urlencoded
+    // Body: email=user@example.com&password=yourpassword
 }

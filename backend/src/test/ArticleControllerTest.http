@@ -4,7 +4,7 @@
 POST http://localhost:8080/login
 Content-Type: application/x-www-form-urlencoded
 
-username=test@example.com&password=password123
+email=test@example.com&password=password123
 
 > {%
     if (response.status === 200 && response.body.token) {
@@ -93,7 +93,7 @@ Content-Type: application/json
 POST http://localhost:8080/login
 Content-Type: application/x-www-form-urlencoded
 
-username=test2@example.com&password=password123
+email=test2@example.com&password=password123
 
 > {%
     if (response.status === 200 && response.body.token) {
