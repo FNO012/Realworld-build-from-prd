@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit hooks..."
+
+# Run lint-staged for frontend
+echo "📝 Checking frontend code..."
+npx lint-staged
+
+# Basic backend compilation check (using system gradle)
+if [ -f "backend/build.gradle" ]; then
+    echo "☕ Checking backend compilation..."
+    cd backend && gradle compileJava --quiet || exit 1
+    cd ..
+else
+    echo "⚠️ Backend build.gradle not found, skipping backend checks"
+fi
+
+echo "✅ Pre-commit hooks completed successfully!"

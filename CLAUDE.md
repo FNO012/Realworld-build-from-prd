@@ -173,6 +173,10 @@ The project follows a structured MVP approach with GitHub issues tracking progre
   - Issue management: `gh issue list`, `gh issue view`, `gh issue edit`, `gh issue comment`
   - Repository operations: `gh repo view`, `gh pr create`, `gh pr list`
   - Always prefer CLI over web interface for consistency and automation
+- **Issue Closing Policy**: **커밋하기 전에는 이슈를 닫지 마세요**
+  - 이슈는 관련 코드가 커밋된 후에만 닫아야 합니다
+  - 작업 완료를 이슈에 코멘트로 보고한 후, 커밋을 먼저 진행하세요
+  - 커밋이 성공한 후에 이슈를 닫거나 다음 단계로 진행하세요
 - **Commit-level Completion**: Each commit must represent a complete, working increment of functionality
   - All tests must pass at commit time
   - Code must compile/build successfully

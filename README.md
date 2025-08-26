@@ -25,16 +25,17 @@ RealWorld는 "Medium.com의 클론"으로, 다음과 같은 핵심 기능을 포
 ## 🛠 기술 스택
 
 ### 백엔드
-- **Language**: Java
-- **Framework**: Spring Boot
+- **Language**: Java 17+ (LTS)
+- **Framework**: Spring Boot 3.3.4
 - **Database**: MariaDB
 - **ORM**: MyBatis
-- **Build Tool**: Gradle
+- **Build Tool**: Gradle 8.x
 
 ### 프론트엔드
-- **Framework**: Next.js 15
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + shadcn/ui
+- **Runtime**: Node.js 22.17.0 (LTS)
+- **Framework**: Next.js 15.x (Latest)
+- **Language**: TypeScript 5.9.2
+- **Styling**: Tailwind CSS 3.x + shadcn/ui
 - **State Management**: Zustand
 - **HTTP Client**: Axios
 
@@ -45,10 +46,13 @@ RealWorld는 "Medium.com의 클론"으로, 다음과 같은 핵심 기능을 포
 ## 🚀 시작하기
 
 ### 필수 요구사항
-- Node.js 20.x (LTS)
-- Java 17+
+- Node.js 22.17.0 (LTS)
+- Java 17+ (LTS)
 - MariaDB
-- Docker & Docker Compose (선택사항)
+- Git (버전 관리)
+
+### 선택사항
+- Docker & Docker Compose (컨테이너화 배포용)
 
 ### 설치 및 실행
 
@@ -60,9 +64,13 @@ cd Realworld-build-from-prd
 
 2. **데이터베이스 설정**
 ```bash
-# MariaDB에 데이터베이스 생성
-mysql -u root -p
-CREATE DATABASE realworld_conduit;
+# MariaDB 시작 (macOS)
+brew services start mariadb
+
+# 스키마 및 테스트 데이터 생성
+cd backend
+mysql -u root < src/main/resources/schema.sql
+mysql -u root < src/main/resources/data.sql
 ```
 
 3. **백엔드 실행**
@@ -86,11 +94,21 @@ npm run dev
 
 ```
 Realworld-build-from-prd/
-├── docs/                   # 프로젝트 문서
-│   ├── realworld-prd.md   # 요구사항 정의서
-│   └── tasks.md           # MVP 구현 작업 목록
-├── backend/               # Spring Boot 백엔드
-└── frontend/              # Next.js 프론트엔드
+├── docs/                          # 프로젝트 문서
+│   ├── realworld-prd.md          # 요구사항 정의서
+│   ├── design.md                 # 시스템 설계 문서
+│   └── tasks.md                  # MVP 구현 작업 목록
+├── backend/                       # Spring Boot 백엔드
+│   ├── src/main/java/            # Java 소스 코드
+│   ├── src/main/resources/       # 설정 파일 및 DB 스키마
+│   ├── build.gradle              # Gradle 빌드 설정
+│   └── DATABASE_SETUP.md         # 데이터베이스 설정 가이드
+├── frontend/                      # Next.js 프론트엔드
+│   ├── src/                      # TypeScript 소스 코드
+│   ├── package.json              # npm 패키지 설정
+│   └── tailwind.config.ts        # Tailwind CSS 설정
+├── CLAUDE.md                     # Claude Code 가이드라인
+└── README.md                     # 프로젝트 개요 (현재 파일)
 ```
 
 ## 🎯 MVP 구현 범위
@@ -132,10 +150,27 @@ Realworld-build-from-prd/
 - 사용자 세션 관리
 - 전체 애플리케이션 아키텍처 이해
 
+## ⚠️ 중요 안내
+
+### 데이터베이스 설정 필수
+프로젝트 실행 전 MariaDB 설치 및 설정이 필요합니다:
+- 📖 **자세한 설정 방법**: [`backend/DATABASE_SETUP.md`](./backend/DATABASE_SETUP.md)
+- 🔗 **스키마 파일**: `backend/src/main/resources/schema.sql`
+- 📝 **테스트 데이터**: `backend/src/main/resources/data.sql`
+
+### 현재 구현 상태 (Issue #4 완료)
+- ✅ 프로젝트 기본 구조 생성
+- ✅ Spring Boot 백엔드 프로젝트 설정
+- ✅ Next.js 프론트엔드 프로젝트 설정  
+- ✅ MariaDB 스키마 및 테스트 데이터 준비
+- ⚠️ **다음 단계**: Issue #5 (백엔드 MVP API 구현)
+
 ## 📖 관련 문서
 
 - [📋 요구사항 정의서 (PRD)](./docs/realworld-prd.md)
+- [🏗️ 시스템 설계 문서](./docs/design.md)
 - [✅ MVP 구현 작업 목록](./docs/tasks.md)
+- [🗄️ 데이터베이스 설정 가이드](./backend/DATABASE_SETUP.md)
 - [🌐 RealWorld 공식 사이트](https://realworld-docs.netlify.app/)
 - [📚 RealWorld GitHub](https://github.com/gothinkster/realworld)
 
