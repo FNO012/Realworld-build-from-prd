@@ -117,27 +117,40 @@ RealWorld Conduit는 Medium.com의 클론으로, 소셜 블로깅 플랫폼을 �
 ## 6. 기술 요구사항
 
 ### 6.1 프론트엔드
-- **런타임**: Node.js 20.x (LTS)
-- **프레임워크**: NextJS 15 (Stable), client only
-- **타입 시스템**: TypeScript 5.6.x
-- **CSS**: shadcn/ui + Tailwind CSS 3.5.x
-- **라우팅**: 파일 기반 라우팅
-- **빌드 도구**: Vite 5.2.x
+- **런타임**: Node.js 22.17.0 (LTS)
+  - 공식 문서: https://nodejs.org/en/docs
+  - 설치: `npm install -g node@lts`
+- **프레임워크**: Next.js 15.x (Latest)
+  - 공식 문서: https://nextjs.org/docs
+  - 설치: `npx create-next-app@latest`
+- **타입 시스템**: TypeScript 5.9.2 (Latest)
+  - 공식 문서: https://www.typescriptlang.org/docs
+  - 설치: `npm install -D typescript@latest`
+- **CSS**: shadcn/ui + Tailwind CSS 3.x (Latest)
+  - Tailwind CSS 공식 문서: https://tailwindcss.com/docs/installation
+  - 설치: `npm install -D tailwindcss@latest postcss autoprefixer`
+- **라우팅**: Next.js App Router (파일 기반)
+- **빌드 도구**: Next.js 내장 (Vite 기반)
 - **상태 관리**: Zustand
 - **패키지 관리**: npm
+- **HTTP 클라이언트**: Axios
 - **반응형 디자인**: 모바일/태블릿/데스크톱 지원
-- **API 통신**: RESTful API와의 비동기 통신. axio 이용
+- **API 통신**: RESTful API와의 비동기 통신
 - **인증**: JWT 토큰 기반 인증 상태 관리
-- **반응형**: 모바일 친화적 반응형 디자인
 
 ### 6.2 백엔드
 
-- **프로그래밍 언어:** Java (또는 Kotlin)
-- **웹 프레임워크:** Spring Boot
-- **데이터베이스 접근:** MyBatis
-- **데이터베이스:** MariaDB (Host PC에 존재)
-- **빌드 도구:** Gradle
-- **테스트:** JUnit
+- **프로그래밍 언어**: Java 17+ (LTS)
+  - 공식 문서: https://docs.oracle.com/en/java/javase/17/
+  - 설치: `sdk install java 17.0.4.1-librca` (SDKMAN 사용)
+- **웹 프레임워크**: Spring Boot 3.5.3 (Latest)
+  - 공식 문서: https://docs.spring.io/spring-boot/docs/current/reference/html/
+  - 설치: Spring Initializr (https://start.spring.io/)
+- **데이터베이스 접근**: MyBatis
+- **데이터베이스**: MariaDB (Host PC에 존재)
+- **빌드 도구**: Gradle 8.x
+  - 공식 문서: https://docs.gradle.org/current/userguide/userguide.html
+- **테스트**: JUnit 5
 - **API**: RESTful API 설계
 - **인증**: JWT 토큰 기반 인증/인가
 - **CORS**: 크로스 오리진 요청 처리

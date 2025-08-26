@@ -77,6 +77,20 @@ mysql -u root -p
 CREATE DATABASE realworld_conduit;
 ```
 
+#### GitHub CLI Operations
+```bash
+# Issue management
+gh issue list                     # List all issues
+gh issue view <issue-number>      # View specific issue
+gh issue edit <issue-number>      # Edit issue content
+gh issue comment <issue-number>   # Add comment to issue
+
+# Repository operations
+gh repo view                      # View repository information
+gh pr create                      # Create pull request
+gh pr list                        # List pull requests
+```
+
 ## Implementation Roadmap
 
 The project follows a structured MVP approach with GitHub issues tracking progress:
@@ -155,15 +169,20 @@ The project follows a structured MVP approach with GitHub issues tracking progre
 - End-to-end: Manual testing of complete user flows (registration → login → article creation → commenting)
 
 ### Commit and Issue Tracking Guidelines
+- **GitHub CLI Usage**: All GitHub-related operations must use the GitHub CLI (gh command)
+  - Issue management: `gh issue list`, `gh issue view`, `gh issue edit`, `gh issue comment`
+  - Repository operations: `gh repo view`, `gh pr create`, `gh pr list`
+  - Always prefer CLI over web interface for consistency and automation
 - **Commit-level Completion**: Each commit must represent a complete, working increment of functionality
   - All tests must pass at commit time
   - Code must compile/build successfully
   - No broken functionality should be introduced
-- **Issue Progress Tracking**: For each task completion, add a comment to the related GitHub issue
+- **Issue Progress Tracking**: For each task completion, add a comment to the related GitHub issue using CLI
+  - Use `gh issue comment <issue-number>` to add progress updates
   - Include commit hash and brief description of what was accomplished
   - Verify acceptance criteria are met before marking items as complete
   - Provide evidence (test results, screenshots, API responses) when applicable
-  - Example: "✅ Completed user registration API endpoint - Commit: abc123f. All tests passing, validates email format and password strength."
+  - Example: `gh issue comment 5 --body "✅ Completed user registration API endpoint - Commit: abc123f. All tests passing, validates email format and password strength."`
 - **Continuous Validation**: Before moving to next task, ensure current implementation:
   - Passes all existing tests
   - Meets acceptance criteria defined in issue
