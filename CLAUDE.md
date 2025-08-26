@@ -132,10 +132,43 @@ The project follows a structured MVP approach with GitHub issues tracking progre
 - Responsive design mandatory (mobile-first approach)
 - CORS configuration required for frontend-backend communication
 
+### Development Methodology
+- **Test-Driven Development (TDD)**: Backend and core business logic must be implemented using TDD approach
+  - Write failing tests first
+  - Implement minimal code to pass tests
+  - Refactor while keeping tests green
+- **SOLID Principles**: All backend code must adhere to SOLID design principles
+  - Single Responsibility Principle
+  - Open/Closed Principle
+  - Liskov Substitution Principle
+  - Interface Segregation Principle
+  - Dependency Inversion Principle
+- **Clean Architecture**: Backend architecture must follow Clean Architecture patterns
+  - Domain layer independent of external concerns
+  - Use cases/application services as orchestrators
+  - Infrastructure details isolated from business logic
+  - Dependency injection for loose coupling
+
 ### Testing Strategy
 - Backend: JUnit unit tests for services and integration tests for APIs
 - Frontend: Jest/React Testing Library for component tests
 - End-to-end: Manual testing of complete user flows (registration → login → article creation → commenting)
+
+### Commit and Issue Tracking Guidelines
+- **Commit-level Completion**: Each commit must represent a complete, working increment of functionality
+  - All tests must pass at commit time
+  - Code must compile/build successfully
+  - No broken functionality should be introduced
+- **Issue Progress Tracking**: For each task completion, add a comment to the related GitHub issue
+  - Include commit hash and brief description of what was accomplished
+  - Verify acceptance criteria are met before marking items as complete
+  - Provide evidence (test results, screenshots, API responses) when applicable
+  - Example: "✅ Completed user registration API endpoint - Commit: abc123f. All tests passing, validates email format and password strength."
+- **Continuous Validation**: Before moving to next task, ensure current implementation:
+  - Passes all existing tests
+  - Meets acceptance criteria defined in issue
+  - Integrates properly with existing codebase
+  - Follows established coding standards and architecture patterns
 
 ## Learning Objectives
 
