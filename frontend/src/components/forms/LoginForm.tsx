@@ -1,12 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import type { LoginRequest } from '@/types';
 
 export default function LoginForm() {
-  const router = useRouter();
   const { login, isLoading } = useAuthStore();
   
   const [formData, setFormData] = useState<LoginRequest>({
@@ -22,7 +20,6 @@ export default function LoginForm() {
 
     try {
       await login(formData);
-      router.push('/');
     } catch (err: unknown) {
       const error = err as { response?: { data?: { error?: { message?: string } } } };
       setError(error.response?.data?.error?.message || 'Login failed');
@@ -48,6 +45,7 @@ export default function LoginForm() {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
+          autoComplete="email"
           required
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
         />
@@ -60,6 +58,7 @@ export default function LoginForm() {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
+          autoComplete="current-password"
           required
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
         />

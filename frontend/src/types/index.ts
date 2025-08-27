@@ -4,10 +4,12 @@ export interface User {
   email: string;
   bio?: string;
   image?: string;
+  following?: boolean;
+  followersCount?: number;
+  followingCount?: number;
 }
 
 export interface Article {
-  id: number;
   slug: string;
   title: string;
   description?: string;
@@ -15,6 +17,9 @@ export interface Article {
   createdAt: string;
   updatedAt: string;
   author: User;
+  favoritesCount?: number;
+  favorited?: boolean;
+  tagList?: string[];
 }
 
 export interface Comment {

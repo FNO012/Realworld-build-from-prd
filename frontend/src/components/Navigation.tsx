@@ -18,12 +18,12 @@ export default function Navigation() {
           <Link href="/" className="text-green-600 text-xl font-bold">
             conduit
           </Link>
-          
+
           <div className="flex items-center space-x-4">
             <Link href="/" className="text-gray-600 hover:text-gray-900">
               Home
             </Link>
-            
+
             {isLoggedIn ? (
               <>
                 <Link href="/editor" className="text-gray-600 hover:text-gray-900">
@@ -34,8 +34,8 @@ export default function Navigation() {
                   <i className="ion-gear-a mr-1"></i>
                   Settings
                 </Link>
-                <Link 
-                  href={`/profile/${user?.username}`} 
+                <Link
+                  href={`/profile/${user?.username}`}
                   className="text-gray-600 hover:text-gray-900"
                 >
                   {user?.username}

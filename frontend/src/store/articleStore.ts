@@ -7,7 +7,7 @@ interface ArticleState {
   currentArticle: Article | null;
   comments: Comment[];
   isLoading: boolean;
-  fetchArticles: () => Promise<void>;
+  fetchArticles: (author?: string, tag?: string) => Promise<void>;
   fetchArticle: (slug: string) => Promise<void>;
   createArticle: (article: ArticleRequest) => Promise<Article>;
   fetchComments: (slug: string) => Promise<void>;
@@ -20,11 +20,26 @@ export const useArticleStore = create<ArticleState>((set, get) => ({
   comments: [],
   isLoading: false,
 
-  fetchArticles: async () => {
+  fetchArticles: async (author?: string, tag?: string) => {
     set({ isLoading: true });
     try {
-      const response = await api.get('/api/articles');
-      const articles = response.data.data || [];
+      let url = '/api/articles';
+      const params = new URLSearchParams();
+      
+      if (author) {
+        params.append('author', author);
+      }
+      
+      if (tag) {
+        params.append('tag', tag);
+      }
+      
+      if (params.toString()) {
+        url += `?${params.toString()}`;
+      }
+      
+      const response = await api.get(url);
+      const articles = response.data.data?.articles || response.data.data || [];
       set({ articles, isLoading: false });
     } catch (error) {
       set({ isLoading: false });
@@ -36,7 +51,7 @@ export const useArticleStore = create<ArticleState>((set, get) => ({
     set({ isLoading: true });
     try {
       const response = await api.get(`/api/articles/${slug}`);
-      const article = response.data.data;
+      const article = response.data.data?.article || response.data.data;
       set({ currentArticle: article, isLoading: false });
     } catch (error) {
       set({ isLoading: false });
@@ -48,7 +63,7 @@ export const useArticleStore = create<ArticleState>((set, get) => ({
     set({ isLoading: true });
     try {
       const response = await api.post('/api/articles', articleData);
-      const article = response.data.data;
+      const article = response.data.data?.article || response.data.data;
       set({ isLoading: false });
       return article;
     } catch (error) {
@@ -60,7 +75,7 @@ export const useArticleStore = create<ArticleState>((set, get) => ({
   fetchComments: async (slug: string) => {
     try {
       const response = await api.get(`/api/articles/${slug}/comments`);
-      const comments = response.data.data || [];
+      const comments = response.data.data?.comments || response.data.data || [];
       set({ comments });
     } catch (error) {
       throw error;
