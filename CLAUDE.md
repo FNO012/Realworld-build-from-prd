@@ -19,7 +19,7 @@ This is a live coding learning project to implement the RealWorld Conduit applic
 
 ### Backend Stack
 - **Framework**: Spring Boot
-- **Language**: Java 17+
+- **Language**: Java 21
 - **Database**: MariaDB (hosted on development machine, not containerized)
 - **ORM**: MyBatis
 - **Build Tool**: Gradle
@@ -35,46 +35,80 @@ This is a live coding learning project to implement the RealWorld Conduit applic
 - **Build Tool**: Next.js built-in (Vite-based)
 - **Package Manager**: npm
 
-### Project Structure (Planned)
+### Project Structure
 ```
 Realworld-build-from-prd/
-├── docs/                   # Project documentation (current)
-│   ├── realworld-prd.md   # Complete requirements specification
-│   ├── design.md          # System architecture & design
-│   └── tasks.md           # MVP implementation roadmap
-├── backend/               # Spring Boot backend (to be created)
-└── frontend/              # Next.js frontend (to be created)
+├── docs/                          # Project documentation
+│   ├── realworld-prd.md          # Complete requirements specification
+│   ├── design.md                 # System architecture & design
+│   └── tasks.md                  # MVP implementation roadmap
+├── backend/                       # Spring Boot backend (Java 21 + Gradle)
+│   ├── src/main/java/             # Java source code
+│   │   └── com/realworld/conduit/ # Main package
+│   │       ├── controller/        # REST controllers
+│   │       ├── service/           # Business logic
+│   │       ├── mapper/            # MyBatis mappers
+│   │       ├── model/             # Domain models
+│   │       ├── dto/               # Data transfer objects
+│   │       ├── config/            # Spring configuration
+│   │       └── util/              # Utility classes
+│   ├── src/main/resources/        # Configuration and resources
+│   │   ├── mapper/                # MyBatis XML mappers
+│   │   ├── application.yml        # Spring Boot configuration
+│   │   ├── schema.sql             # Database schema
+│   │   └── data.sql               # Test data
+│   └── src/test/                  # Test code and HTTP test files
+└── frontend/                      # Next.js frontend (TypeScript + Tailwind)
+    ├── src/app/                   # Next.js App Router pages
+    ├── src/components/            # React components
+    ├── src/store/                 # Zustand state stores
+    ├── src/lib/                   # API utilities
+    └── src/types/                 # TypeScript type definitions
 ```
 
 ## Development Commands
 
-**Important Note**: The actual `backend/` and `frontend/` directories don't exist yet. This is a planning phase repository. Refer to GitHub issues #4-7 for implementation roadmap.
+**Current State**: Both `backend/` and `frontend/` directories are implemented and functional. The project has moved beyond the planning phase.
 
-### Expected Commands (Once Implemented)
+### Development Commands
 
 #### Backend Development
 ```bash
 cd backend
 ./gradlew bootRun              # Start Spring Boot server (port 8080)
-./gradlew test                 # Run backend tests
+./gradlew test                 # Run all backend tests
+./gradlew test --tests "*UserServiceTest*"  # Run specific test class
 ./gradlew build               # Build backend application
+./gradlew clean               # Clean build artifacts
+./gradlew bootRun --args='--spring.profiles.active=dev'  # Run with specific profile
 ```
 
 #### Frontend Development  
 ```bash
 cd frontend
 npm install                   # Install dependencies
-npm run dev                   # Start development server (port 3000)
-npm run build                 # Build for production
-npm run lint                  # Lint code
-npm run typecheck            # TypeScript type checking
+npm run dev                   # Start development server (port 3000) with Turbopack
+npm run build                 # Build for production with Turbopack
+npm run start                 # Start production server
+npm run lint                  # Run ESLint
+npm run free-port             # Kill processes on port 3000
 ```
+
+**Note**: TypeScript type checking is integrated into Next.js build process. Use `npx tsc --noEmit` for manual type checking.
 
 #### Database Setup
 ```bash
 # MariaDB setup (on host machine)
 mysql -u root -p
 CREATE DATABASE realworld_conduit;
+CREATE USER 'realworld'@'localhost' IDENTIFIED BY 'conduit';
+GRANT ALL PRIVILEGES ON realworld_conduit.* TO 'realworld'@'localhost';
+FLUSH PRIVILEGES;
+
+# Initialize schema and test data
+cd backend
+mysql -u realworld -p realworld_conduit < src/main/resources/schema.sql
+mysql -u realworld -p realworld_conduit < src/main/resources/data.sql
 ```
 
 #### GitHub CLI Operations
@@ -151,10 +185,20 @@ The project follows a structured MVP approach with GitHub issues tracking progre
 - CORS configuration required for frontend-backend communication
 
 ### Development Methodology
-- **Test-Driven Development (TDD)**: Backend and core business logic must be implemented using TDD approach
-  - Write failing tests first
+- **Test-Driven Development (TDD)**: Backend and **Frontend core business logic** must be implemented using TDD approach
+  - **Backend**: Write failing tests first, implement minimal code to pass tests, refactor while keeping tests green
+  - **Frontend**: Core business logic (stores, utilities, data transformation) must follow TDD approach using Jest/React Testing Library
+  - Write failing tests first for all business logic functions
   - Implement minimal code to pass tests
   - Refactor while keeping tests green
+- **Code Quality Standards**: Strict adherence to linting and type checking rules
+  - **ESLint Rule Enforcement**: ESLint 규칙 비활성화 절대 금지 (`eslint-disable` 주석 사용 금지)
+  - **TypeScript Type Safety**: `@ts-ignore`, `any` 타입 사용 최소화
+  - **Test Coverage**: 코어 비즈니스 로직은 반드시 테스트 커버리지 확보
+- **Git Hook Testing**: 커밋 전 자동 테스트 검증 시스템
+  - **Pre-commit Hook**: 커밋 시 테스트 실행 및 통과 여부 확인
+  - **테스트 실패 시 커밋 차단**: 모든 테스트가 통과해야만 커밋 허용
+  - **기존 코드 테스트 추가**: 테스트가 없는 기존 코어 로직에 대해 테스트 우선 추가
 - **SOLID Principles**: All backend code must adhere to SOLID design principles
   - Single Responsibility Principle
   - Open/Closed Principle
@@ -168,13 +212,22 @@ The project follows a structured MVP approach with GitHub issues tracking progre
   - Dependency injection for loose coupling
 
 ### Testing Strategy
-- Backend: JUnit unit tests for services and integration tests for APIs
-- Frontend: Jest/React Testing Library for component tests
-- End-to-end: Manual testing of complete user flows (registration → login → article creation → commenting)
+- **Backend**: JUnit unit tests for services and integration tests for APIs
+  - **TDD 필수**: 모든 서비스 로직은 테스트 우선 작성
+  - **테스트 커버리지**: 코어 비즈니스 로직 100% 커버리지 목표
+- **Frontend**: Jest/React Testing Library for component tests
+  - **TDD 필수**: 코어 비즈니스 로직 (Zustand stores, utilities, data transformation) 테스트 우선 작성
+  - **Component Testing**: UI 컴포넌트 테스트
+  - **Integration Testing**: API 통합 테스트
+- **End-to-end**: Manual testing of complete user flows (registration → login → article creation → commenting)
 - **HTTP Request Test Files**: Controller 생성 시 해당 Controller 이름의 .http 파일을 `src/test/` 하위에 생성해야 함
   - 파일명 형식: `{ControllerName}.http` (예: UserController → UserControllerTest.http)
   - 각 Controller의 모든 API 엔드포인트에 대한 HTTP 요청 테스트 케이스 포함
   - 성공 케이스와 실패 케이스(검증 오류, 비즈니스 로직 오류) 모두 작성
+- **Git Hook Integration**: 커밋 전 테스트 자동 실행
+  - Pre-commit hook에서 모든 테스트 실행
+  - 테스트 실패 시 커밋 차단
+  - Lint, TypeScript 타입 체크도 함께 실행
 
 ### Commit and Issue Tracking Guidelines
 - **GitHub CLI Usage**: All GitHub-related operations must use the GitHub CLI (gh command)
@@ -221,7 +274,39 @@ This project emphasizes understanding:
 
 ## Current State
 
-**Phase**: Planning and Documentation (Pre-Implementation)
-**Status**: Ready for implementation following GitHub issue roadmap
-**Next Steps**: Begin with Issue #4 (Environment Setup) to create actual code directories
-- 5
+**Phase**: Implementation Phase (MVP Development)
+**Status**: Full-stack application implemented with core features
+**Components**: Spring Boot backend with MyBatis, Next.js frontend with Zustand, MariaDB database
+**Authentication**: JWT-based authentication system fully implemented
+
+## Architecture Overview
+
+This codebase follows a clean layered architecture pattern:
+
+### Backend Architecture (Spring Boot + MyBatis)
+- **Controller Layer**: REST API endpoints (`@RestController`)
+- **Service Layer**: Business logic and transaction management (`@Service`)
+- **Mapper Layer**: MyBatis data access layer with XML mappers
+- **Model Layer**: Domain entities representing database tables
+- **DTO Layer**: Data transfer objects for API requests/responses
+- **Security**: JWT authentication with Spring Security filters
+- **Configuration**: Centralized in `SecurityConfig` and `WebConfig`
+
+### Frontend Architecture (Next.js + Zustand)
+- **App Router**: File-based routing with `src/app/` directory
+- **Component Architecture**: Reusable React components in `src/components/`
+- **State Management**: Zustand stores (`authStore`, `articleStore`, `userStore`)
+- **API Layer**: Centralized HTTP client in `src/lib/api.ts`
+- **TypeScript**: Strong typing with interfaces in `src/types/`
+
+### Key Integration Points
+- **Authentication Flow**: JWT tokens stored in Zustand, sent via Authorization header
+- **API Communication**: Axios-based HTTP client with automatic token attachment
+- **Error Handling**: Centralized error responses using `ApiResponse<T>` wrapper
+- **Database**: MyBatis XML mappers for complex queries, entity-based operations
+
+### Testing Strategy Implementation
+- **Backend**: JUnit tests for all service classes and controllers
+- **HTTP Testing**: `.http` files for manual API testing in `src/test/`
+- **Frontend**: Component tests using Jest/React Testing Library (TDD for business logic)
+- **Integration**: End-to-end user flow testing
