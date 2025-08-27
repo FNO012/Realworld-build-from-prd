@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.realworld.conduit.mapper.TagMapper">
+
+    <resultMap id="TagResultMap" type="com.realworld.conduit.model.Tag">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <insert id="insertTag" parameterType="com.realworld.conduit.model.Tag" 
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tags (name, created_at)
+        VALUES (#{name}, NOW())
+    </insert>
+
+    <select id="findByName" resultMap="TagResultMap">
+        SELECT id, name, created_at
+        FROM tags
+        WHERE name = #{name}
+    </select>
+
+    <select id="findAllTags" resultMap="TagResultMap">
+        SELECT id, name, created_at
+        FROM tags
+        ORDER BY name
+    </select>
+
+    <select id="findTagsByArticleId" resultMap="TagResultMap">
+        SELECT t.id, t.name, t.created_at
+        FROM tags t
+        JOIN article_tags at ON t.id = at.tag_id
+        WHERE at.article_id = #{articleId}
+        ORDER BY t.name
+    </select>
+
+</mapper>

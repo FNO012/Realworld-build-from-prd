@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.realworld.conduit.mapper.UserFollowMapper">
+
+    <resultMap id="UserFollowResultMap" type="com.realworld.conduit.model.UserFollow">
+        <id property="id" column="id"/>
+        <result property="followerId" column="follower_id"/>
+        <result property="followingId" column="following_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="followerUsername" column="follower_username"/>
+        <result property="followingUsername" column="following_username"/>
+    </resultMap>
+
+    <insert id="insertFollow" parameterType="com.realworld.conduit.model.UserFollow" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_follows (follower_id, following_id, created_at)
+        VALUES (#{followerId}, #{followingId}, NOW())
+    </insert>
+
+    <delete id="deleteFollow">
+        DELETE FROM user_follows 
+        WHERE follower_id = #{followerId} AND following_id = #{followingId}
+    </delete>
+
+    <select id="isFollowing" resultType="boolean">
+        SELECT COUNT(*) > 0 
+        FROM user_follows 
+        WHERE follower_id = #{followerId} AND following_id = #{followingId}
+    </select>
+
+    <select id="findFollowersByUserId" resultMap="UserFollowResultMap">
+        SELECT uf.id, uf.follower_id, uf.following_id, uf.created_at,
+               u1.username as follower_username,
+               u2.username as following_username
+        FROM user_follows uf
+        LEFT JOIN users u1 ON uf.follower_id = u1.id
+        LEFT JOIN users u2 ON uf.following_id = u2.id
+        WHERE uf.following_id = #{userId}
+        ORDER BY uf.created_at DESC
+    </select>
+
+    <select id="findFollowingByUserId" resultMap="UserFollowResultMap">
+        SELECT uf.id, uf.follower_id, uf.following_id, uf.created_at,
+               u1.username as follower_username,
+               u2.username as following_username
+        FROM user_follows uf
+        LEFT JOIN users u1 ON uf.follower_id = u1.id
+        LEFT JOIN users u2 ON uf.following_id = u2.id
+        WHERE uf.follower_id = #{userId}
+        ORDER BY uf.created_at DESC
+    </select>
+
+    <select id="countFollowers" resultType="int">
+        SELECT COUNT(*)
+        FROM user_follows
+        WHERE following_id = #{userId}
+    </select>
+
+    <select id="countFollowing" resultType="int">
+        SELECT COUNT(*)
+        FROM user_follows
+        WHERE follower_id = #{userId}
+    </select>
+
+</mapper>

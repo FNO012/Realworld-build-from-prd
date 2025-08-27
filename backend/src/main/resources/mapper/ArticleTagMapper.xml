@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.realworld.conduit.mapper.ArticleTagMapper">
+
+    <resultMap id="ArticleTagResultMap" type="com.realworld.conduit.model.ArticleTag">
+        <id property="id" column="id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="tagId" column="tag_id"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <insert id="insertArticleTag" parameterType="com.realworld.conduit.model.ArticleTag" 
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article_tags (article_id, tag_id, created_at)
+        VALUES (#{articleId}, #{tagId}, NOW())
+    </insert>
+
+    <delete id="deleteArticleTag">
+        DELETE FROM article_tags
+        WHERE article_id = #{articleId} AND tag_id = #{tagId}
+    </delete>
+
+    <select id="findArticleTagsByArticleId" resultMap="ArticleTagResultMap">
+        SELECT id, article_id, tag_id, created_at
+        FROM article_tags
+        WHERE article_id = #{articleId}
+    </select>
+
+    <select id="findArticleTagsByTagId" resultMap="ArticleTagResultMap">
+        SELECT id, article_id, tag_id, created_at
+        FROM article_tags
+        WHERE tag_id = #{tagId}
+    </select>
+
+</mapper>
