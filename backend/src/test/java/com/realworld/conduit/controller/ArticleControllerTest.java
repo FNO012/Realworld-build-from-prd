@@ -83,7 +83,7 @@ class ArticleControllerTest {
         when(articleService.getArticle("test-article")).thenReturn(sampleResponse);
 
         // when
-        ResponseEntity<?> response = articleController.getArticle("test-article");
+        ResponseEntity<?> response = articleController.getArticle("test-article", authentication);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -99,7 +99,7 @@ class ArticleControllerTest {
         when(articleService.getTotalArticlesCount()).thenReturn(1);
 
         // when
-        ResponseEntity<?> response = articleController.getArticles(0, 20);
+        ResponseEntity<?> response = articleController.getArticles(0, 20, null, null, authentication);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

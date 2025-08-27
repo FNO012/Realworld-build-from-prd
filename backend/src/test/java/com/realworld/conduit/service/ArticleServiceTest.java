@@ -4,6 +4,10 @@ import com.realworld.conduit.dto.ArticleRequest;
 import com.realworld.conduit.dto.ArticleResponse;
 import com.realworld.conduit.mapper.ArticleMapper;
 import com.realworld.conduit.mapper.UserMapper;
+import com.realworld.conduit.mapper.ArticleFavoriteMapper;
+import com.realworld.conduit.mapper.ArticleTagMapper;
+import com.realworld.conduit.mapper.TagMapper;
+import com.realworld.conduit.mapper.UserFollowMapper;
 import com.realworld.conduit.model.Article;
 import com.realworld.conduit.model.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +34,18 @@ class ArticleServiceTest {
     
     @Mock
     private UserMapper userMapper;
+    
+    @Mock
+    private ArticleFavoriteMapper articleFavoriteMapper;
+    
+    @Mock
+    private ArticleTagMapper articleTagMapper;
+    
+    @Mock
+    private TagMapper tagMapper;
+    
+    @Mock
+    private UserFollowMapper userFollowMapper;
     
     @InjectMocks
     private ArticleService articleService;
@@ -72,6 +88,7 @@ class ArticleServiceTest {
         when(userMapper.findByEmail("test@example.com")).thenReturn(testUser);
         when(articleMapper.existsBySlug(anyString())).thenReturn(false);
         when(articleMapper.findBySlug(anyString())).thenReturn(testArticle);
+        when(articleFavoriteMapper.countFavorites(any())).thenReturn(0);
         doNothing().when(articleMapper).insertArticle(any(Article.class));
 
         // when
@@ -109,6 +126,7 @@ class ArticleServiceTest {
     void getArticle_Success() {
         // given
         when(articleMapper.findBySlug("test-article-slug")).thenReturn(testArticle);
+        when(articleFavoriteMapper.countFavorites(any())).thenReturn(5);
 
         // when
         ArticleResponse response = articleService.getArticle("test-article-slug");
@@ -140,17 +158,20 @@ class ArticleServiceTest {
     void getArticles_Success() {
         // given
         Article article1 = new Article();
+        article1.setId(1L);
         article1.setSlug("article-1");
         article1.setTitle("Article 1");
         article1.setAuthorUsername("user1");
 
         Article article2 = new Article();
+        article2.setId(2L);
         article2.setSlug("article-2");
         article2.setTitle("Article 2");
         article2.setAuthorUsername("user2");
 
         List<Article> articles = Arrays.asList(article1, article2);
         when(articleMapper.findAllArticles(0, 20)).thenReturn(articles);
+        when(articleFavoriteMapper.countFavorites(any())).thenReturn(3);
 
         // when
         List<ArticleResponse> response = articleService.getArticles(0, 20);
@@ -169,6 +190,7 @@ class ArticleServiceTest {
         // given
         when(articleMapper.findBySlug("test-article-slug")).thenReturn(testArticle);
         when(userMapper.findByEmail("test@example.com")).thenReturn(testUser);
+        when(articleFavoriteMapper.countFavorites(any())).thenReturn(2);
         doNothing().when(articleMapper).updateArticle(any(Article.class));
 
         ArticleRequest updateRequest = new ArticleRequest();
