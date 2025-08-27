@@ -65,4 +65,30 @@
         SELECT COUNT(*) FROM articles
     </select>
 
+    <select id="findArticlesByAuthor" resultMap="ArticleResultMap">
+        SELECT a.id, a.slug, a.title, a.description, a.body, a.author_id, 
+               a.created_at, a.updated_at,
+               u.username as author_username, u.email as author_email, 
+               u.bio as author_bio, u.image as author_image
+        FROM articles a
+        LEFT JOIN users u ON a.author_id = u.id
+        WHERE u.username = #{authorUsername}
+        ORDER BY a.created_at DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="findArticlesByTag" resultMap="ArticleResultMap">
+        SELECT a.id, a.slug, a.title, a.description, a.body, a.author_id, 
+               a.created_at, a.updated_at,
+               u.username as author_username, u.email as author_email, 
+               u.bio as author_bio, u.image as author_image
+        FROM articles a
+        LEFT JOIN users u ON a.author_id = u.id
+        WHERE a.title LIKE CONCAT('%', #{tag}, '%') 
+           OR a.description LIKE CONCAT('%', #{tag}, '%')
+           OR a.body LIKE CONCAT('%', #{tag}, '%')
+        ORDER BY a.created_at DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
 </mapper>

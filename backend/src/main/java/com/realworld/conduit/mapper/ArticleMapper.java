@@ -15,6 +15,10 @@ public interface ArticleMapper {
     
     List<Article> findAllArticles(@Param("offset") int offset, @Param("limit") int limit);
     
+    List<Article> findArticlesByAuthor(@Param("authorUsername") String authorUsername, @Param("offset") int offset, @Param("limit") int limit);
+    
+    List<Article> findArticlesByTag(@Param("tag") String tag, @Param("offset") int offset, @Param("limit") int limit);
+    
     void updateArticle(Article article);
     
     void deleteBySlug(@Param("slug") String slug);

@@ -11,6 +11,8 @@ public class ArticleResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private AuthorResponse author;
+    private int favoritesCount;
+    private boolean favorited;
     
     public ArticleResponse() {}
     
@@ -26,8 +28,13 @@ public class ArticleResponse {
         this.author.setUsername(article.getAuthorUsername());
         this.author.setBio(article.getAuthorBio());
         this.author.setImage(article.getAuthorImage());
+        
+        // Default values for favorites (will be set by service)
+        this.favoritesCount = 0;
+        this.favorited = false;
     }
     
+    // Getters and setters
     public String getSlug() {
         return slug;
     }
@@ -82,6 +89,22 @@ public class ArticleResponse {
     
     public void setAuthor(AuthorResponse author) {
         this.author = author;
+    }
+    
+    public int getFavoritesCount() {
+        return favoritesCount;
+    }
+    
+    public void setFavoritesCount(int favoritesCount) {
+        this.favoritesCount = favoritesCount;
+    }
+    
+    public boolean isFavorited() {
+        return favorited;
+    }
+    
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
     }
     
     public static class AuthorResponse {

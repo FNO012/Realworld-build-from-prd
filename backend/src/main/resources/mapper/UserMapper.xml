@@ -51,4 +51,17 @@
         WHERE username = #{username}
     </select>
 
+    <update id="updateUser" parameterType="com.realworld.conduit.model.User">
+        UPDATE users 
+        SET username = #{username},
+            email = #{email},
+            bio = #{bio},
+            image = #{image},
+            updated_at = NOW()
+        <if test="password != null and password != ''">
+            ,password = #{password}
+        </if>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

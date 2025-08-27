@@ -40,7 +40,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/users").permitAll()     // 회원가입만 허용
                 .requestMatchers("/login").permitAll()         // 로그인 허용
                 .requestMatchers("/api/articles").permitAll()  // 글 조회 허용
-                .requestMatchers("/api/articles/**/comments").permitAll() // 댓글 조회 허용
+                .requestMatchers("/api/articles/*/comments").permitAll() // 댓글 조회 허용
+                .requestMatchers("/api/users/*").permitAll()   // 사용자 프로필 조회 허용 (팔로우 정보 포함)
                 .anyRequest().authenticated()                   // 나머지는 인증 필요
             )
             .formLogin(form -> form
